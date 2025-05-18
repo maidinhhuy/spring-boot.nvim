@@ -1,7 +1,10 @@
 local M = {}
+
+local create_project = require("spring-boot.nvim.utils.create_project")
+
 local Terminal = require("toggleterm.terminal").Terminal
 
-local function find_mvnw()
+local function find_mvn()
 	local current_dir = vim.fn.expand("%:p:h")
 	local files = vim.fn.systemlist("find " .. vim.fn.escape(current_dir, "") .. " -name mvnw -type f")
 
@@ -57,6 +60,6 @@ function M.run_mvnw(mvnw_path)
 	end
 end
 
-M.find_mvnw = find_mvnw
-
+M.find_mvnw = find_mvn
+M.create_project = create_project.create_application
 return M
