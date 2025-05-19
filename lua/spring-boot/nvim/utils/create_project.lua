@@ -5,18 +5,6 @@ local deps_loader = require("spring-boot.nvim.utils.deps_loader")
 -- Fetch latest deps from Spring
 local deps = deps_loader.fetch_dependencies()
 
-local available_dependencies = {
-	web = "Spring Web",
-	data_jpa = "Spring Data JPA",
-	security = "Spring Security",
-	thymeleaf = "Thymeleaf",
-	actuator = "Spring Boot Actuator",
-	validation = "Bean Validation",
-	devtools = "Spring Boot DevTools",
-	testcontainers = "Testcontainers",
-	postgresql = "PostgreSQL Driver",
-	mysql = "MySQL Driver",
-}
 local function ask_input(prompt, default)
 	vim.fn.inputsave()
 	local answer = vim.fn.input(prompt .. " [" .. default .. "]: ")

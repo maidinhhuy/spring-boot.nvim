@@ -48,18 +48,28 @@ local spring_boot_termial = nil
 function M.run_mvnw(mvnw_path)
 	if not spring_boot_termial or not spring_boot_termial:is_open() then
 		local cwd = vim.fn.fnamemodify(mvnw_path, ":h")
+
 		spring_boot_termial = Terminal:new({
-			cmd = table.concat({ mvnw_path, "spring-boot:run" }, " "),
+			cmd = mvnw_path .. " spring-boot:run",
 			cwd = cwd,
-			size = 20,
-			direction = "window",
+			direction = "horizontal", -- accepted by toggleterm
+			size = 50, -- adjust size if needed
 			close_on_exit = false,
+			hidden = true,
 		})
 
 		spring_boot_termial:toggle()
+	else
+		spring_boot_termial:toggle() -- toggle visibility
 	end
 end
 
 M.find_mvnw = find_mvn
 M.create_project = create_project.create_application
+
+function M.setup()
+	vim.api.nvim_create_user_command("SpringBootRun", M.find_mvnw, {})
+	vim.api.nvim_create_user_command("SpringBootInit", M.create_project, {})
+end
+
 return M
