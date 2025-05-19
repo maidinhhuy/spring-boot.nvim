@@ -10,7 +10,7 @@ return {
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "akinsho/toggleterm.nvim" },
 		config = function()
 			local sb = require("spring-boot.nvim")
-         sb.setup()
+      sb.setup()
 		end,
 		init = function()
 			require("spring-boot.nvim")
