@@ -4,18 +4,18 @@
 
 ```lua
 return {
-	{
-		"maidinhhuy/spring-boot.nvim",
-		version = "*",
-		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "akinsho/toggleterm.nvim" },
-		config = function()
+  {
+    "maidinhhuy/spring-boot.nvim",
+    version = "*",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "akinsho/toggleterm.nvim" },
+    config = function()
       local sb = require("spring-boot.nvim")
       sb.setup()
-		end,
-		init = function()
-			require("spring-boot.nvim")
-		end,
-	},
+    end,
+    init = function()
+      require("spring-boot.nvim")
+    end,
+  },
 }
 ```
 ```
