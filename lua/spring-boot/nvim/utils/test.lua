@@ -38,6 +38,7 @@ local function run_test_file()
 						class_name = class_name:gsub("/", ".")
 						local mvn_cmd = vim.fn.executable("./mvnw") == 1 and "./mvnw" or "mvn"
 						vim.cmd("split | terminal " .. mvn_cmd .. " -Dtest=" .. class_name .. " test")
+						vim.api.nvim_feedkeys("i", "n", true) -- Go into insert mode, like `startinsert`
 					else
 						vim.notify("Could not resolve test class name", vim.log.levels.ERROR)
 					end
