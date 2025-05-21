@@ -4,13 +4,19 @@ local maven = require("spring-boot.nvim.utils.maven")
 local function find_test_files()
 	local root = vim.fn.getcwd()
 	local test_files = vim.fn.systemlist("find " .. root .. " -type f -name '*Test.java' -o -name '*Tests.java'")
+	for i, path in ipairs(test_files) do
+		test_files[i] = string.gsub(path, "^" .. vim.pesc(root) .. "/", "")
+	end
 	return test_files
 end
 
 local function run_all_tests()
-	local mvn_cmd = maven.find_mvn()
-	print(mvn_cmd)
-	vim.cmd("split | terminal " .. mvn_cmd .. " test")
+	maven.find_mvn(function(mvn_path)
+		maven.find_pom_xml(function(pom_dir)
+			vim.cmd("split | terminal cd " .. pom_dir .. " && " .. mvn_path .. " test")
+			vim.api.nvim_feedkeys("i", "n", true) -- Go into insert mode, like `startinsert`
+		end)
+	end)
 end
 
 local function run_test_file()
@@ -36,7 +42,7 @@ local function run_test_file()
 					local class_name = path:match("src/test/java/(.-)%.java")
 					if class_name then
 						class_name = class_name:gsub("/", ".")
-						local mvn_cmd = vim.fn.executable("./mvnw") == 1 and "./mvnw" or "mvn"
+						local mvn_cmd = "mvn" or vim.fn.executable("./mvnw") == 1 and "./mvnw"
 						vim.cmd("split | terminal " .. mvn_cmd .. " -Dtest=" .. class_name .. " test")
 						vim.api.nvim_feedkeys("i", "n", true) -- Go into insert mode, like `startinsert`
 					else
